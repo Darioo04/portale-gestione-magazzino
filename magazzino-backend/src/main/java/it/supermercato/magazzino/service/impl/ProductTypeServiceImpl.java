@@ -50,20 +50,21 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ProductTypeDTO updateProductType(String eanCode, ProductTypeDTO productTypeDTO) {
         if (eanCode == null || eanCode.isBlank()) {
             throw new IllegalArgumentException("EAN code cannot be null or blank");
-        } else if (!productTypeRepository.existsByEanCode(eanCode)) {
-            throw new IllegalArgumentException("Product type with EAN code " + eanCode + " not found.");
-        } else {
-            Category category = categoryRepository.findById(productTypeDTO.getCategoryId())
-                .orElseThrow(() -> new IllegalArgumentException("Category with ID " + productTypeDTO.getCategoryId() + " not found."));
-            var existingEntity = productTypeRepository.findByEanCode(eanCode).get();
-            existingEntity.setName(productTypeDTO.getName());
-            existingEntity.setBrand(productTypeDTO.getBrand());
-            existingEntity.setPrice(productTypeDTO.getPrice());
-            existingEntity.setStockThreshold(productTypeDTO.getStockThreshold());
-            existingEntity.setCategory(category);
-            var savedEntity = productTypeRepository.save(existingEntity);
-            return new ProductTypeDTO(savedEntity.getEanCode(), savedEntity.getName(), savedEntity.getBrand(), savedEntity.getPrice(), savedEntity.getStockThreshold(), savedEntity.getCategory().getId());
         }
+
+        Category category = categoryRepository.findById(productTypeDTO.getCategoryId())
+            .orElseThrow(() -> new IllegalArgumentException("Category with ID " + productTypeDTO.getCategoryId() + " not found."));
+
+        ProductType existingEntity = productTypeRepository.findByEanCode(eanCode)
+            .orElseThrow(() -> new IllegalArgumentException("Product type with EAN code " + eanCode + " not found."));
+        
+        existingEntity.setName(productTypeDTO.getName());
+        existingEntity.setBrand(productTypeDTO.getBrand());
+        existingEntity.setPrice(productTypeDTO.getPrice());
+        existingEntity.setStockThreshold(productTypeDTO.getStockThreshold());
+        existingEntity.setCategory(category);
+        var savedEntity = productTypeRepository.save(existingEntity);
+        return new ProductTypeDTO(savedEntity.getEanCode(), savedEntity.getName(), savedEntity.getBrand(), savedEntity.getPrice(), savedEntity.getStockThreshold(), savedEntity.getCategory().getId());
     }
 
     @Override

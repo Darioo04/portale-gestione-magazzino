@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -39,11 +38,9 @@ public class Product {
     private ProductType productType;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-        @JoinColumn(name = "locazione_area", referencedColumnName = "area"),
-        @JoinColumn(name = "locazione_corsia", referencedColumnName = "corsia"),
-        @JoinColumn(name = "locazione_scaffale", referencedColumnName = "scaffale")
-    })
+    @JoinColumn(name = "locazione_area", referencedColumnName = "area")
+    @JoinColumn(name = "locazione_corsia", referencedColumnName = "corsia")
+    @JoinColumn(name = "locazione_scaffale", referencedColumnName = "scaffale")
     private Location location;
 
     public Product() {
