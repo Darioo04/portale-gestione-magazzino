@@ -21,6 +21,7 @@
 
     <properties>
         <java.version>25</java.version>
+        <sonar.organization>darioo04</sonar.organization>
     </properties>
 
     <modules>
