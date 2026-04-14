@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <groupId>it.supermercato</groupId>
+        <artifactId>magazzino-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>magazzino-ear</artifactId>
+    <packaging>ear</packaging>
+    
+    <name>Magazzino EAR</name>
+    <description>Enterprise Archive Packaging</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>it.supermercato</groupId>
+            <artifactId>magazzino-backend</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>it.supermercato</groupId>
+            <artifactId>magazzino-frontend</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <modules>
+                        <webModule>
+                            <groupId>it.supermercato</groupId>
+                            <artifactId>magazzino-backend</artifactId>
+                            <contextRoot>/api</contextRoot>
+                        </webModule>
+                        <webModule>
+                            <groupId>it.supermercato</groupId>
+                            <artifactId>magazzino-frontend</artifactId>
+                            <contextRoot>/</contextRoot>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

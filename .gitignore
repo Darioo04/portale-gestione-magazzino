@@ -1,0 +1,29 @@
+# --- JAVA & MAVEN ---
+**/target/
+target/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# --- IDE (VS Code, IntelliJ, Eclipse) ---
+.vscode/
+.idea/
+*.iml
+*.iws
+.settings/
+.project
+.classpath
+.factorypath
+.springBeans
+.sts4-cache
+
+# --- LOGS & TEMP ---
+**/logs/
+*.log
+temp/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
