@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS Notifica (
     messaggio TEXT NOT NULL,
     data_creazione DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     letto BOOLEAN NOT NULL DEFAULT FALSE,
-    priorita ENUM('bassa', 'media', 'alta') NOT NULL,
+    priorita ENUM('LOW', 'MEDIUM', 'HIGH') NOT NULL,
     utente_id INTEGER NOT NULL,
     FOREIGN KEY (utente_id) REFERENCES Utente(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -141,6 +141,6 @@ INSERT INTO Movimento (quantita, prodotto_id, utente_id) VALUES
 (12, 3, 2); -- Carico di 12 unità di Smartphone Model X da parte di Luigi
 
 INSERT INTO Notifica (messaggio, priorita, utente_id) VALUES 
-('La quantità di Pasta Spaghetti 500g è scesa sotto la soglia di sicurezza.', 'alta', 2),
-('Il prodotto Smartphone Model X è in esaurimento.', 'media', 1),
-('Il prodotto Detersivo Liquido 1L ha superato la data di scadenza.', 'alta', 3);
+('La quantità di Pasta Spaghetti 500g è scesa sotto la soglia di sicurezza.', 'HIGH', 2),
+('Il prodotto Smartphone Model X è in esaurimento.', 'MEDIUM', 1),
+('Il prodotto Detersivo Liquido 1L ha superato la data di scadenza.', 'HIGH', 3);
