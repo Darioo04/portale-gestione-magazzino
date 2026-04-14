@@ -7,6 +7,10 @@ on:
     types: [opened, synchronize, reopened]
     branches: [ "main" ]
 
+permissions:
+  contents: write
+  pull-requests: read
+
 jobs:
   build-and-analyze:
     name: Build, Test and Analyze
@@ -46,3 +50,4 @@ jobs:
       - name: Update dependency graph
         if: github.event_name == 'push' # Lo facciamo solo sul push per non rallentare le PR
         uses: advanced-security/maven-dependency-submission-action@v4
+        continue-on-error: true
