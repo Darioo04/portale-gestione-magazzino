@@ -1,0 +1,57 @@
+<mat-sidenav-container class="h-screen w-screen bg-[#121212]">
+  <mat-sidenav #sidenav mode="side" opened class="w-64 bg-[#1e1e1e] border-r-0 shadow-lg" [fixedInViewport]="true">
+    
+    <div class="h-16 flex items-center justify-center border-b border-gray-800">
+      <mat-icon class="text-blue-500 mr-2">warehouse</mat-icon>
+      <span class="text-xl font-bold tracking-wider text-white">Magazzino</span>
+    </div>
+
+    <mat-nav-list class="pt-4 px-2">
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="bg-blue-600/20 text-blue-400" [routerLinkActiveOptions]="{exact: true}" class="rounded-lg mb-1 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <div matListItemTitle>Dashboard</div>
+      </a>
+      
+      <a mat-list-item routerLink="/categories" routerLinkActive="bg-blue-600/20 text-blue-400" class="rounded-lg mb-1 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+        <mat-icon matListItemIcon>category</mat-icon>
+        <div matListItemTitle>Categorie</div>
+      </a>
+
+      <a mat-list-item routerLink="/products" routerLinkActive="bg-blue-600/20 text-blue-400" class="rounded-lg mb-1 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+        <mat-icon matListItemIcon>inventory_2</mat-icon>
+        <div matListItemTitle>Prodotti</div>
+      </a>
+
+      <a mat-list-item routerLink="/movements" routerLinkActive="bg-blue-600/20 text-blue-400" class="rounded-lg mb-1 text-gray-300 hover:text-white hover:bg-white/5 transition-colors">
+        <mat-icon matListItemIcon>sync_alt</mat-icon>
+        <div matListItemTitle>Movimenti</div>
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content class="flex flex-col">
+    <!-- Toolbar -->
+    <mat-toolbar class="h-16 bg-[#1e1e1e] border-b border-gray-800 flex justify-between shadow-sm z-10 px-6">
+      <div>
+        <button mat-icon-button (click)="sidenav.toggle()" class="text-gray-400 hover:text-white">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      
+      <div class="flex items-center space-x-4" *ngIf="currentUser$ | async as user">
+        <span class="text-sm font-medium text-gray-300">
+          Ciao, <span class="text-blue-400">{{ user.sub }}</span>
+        </span>
+        <button mat-flat-button color="warn" (click)="logout()" class="rounded-full px-6">
+          Logout
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 overflow-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

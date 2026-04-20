@@ -1,0 +1,11 @@
+::ng-deep .custom-field .mdc-text-field--outlined {
+  --mdc-outlined-text-field-container-color: #2a2a2a;
+  --mdc-outlined-text-field-outline-color: #333333;
+  --mdc-outlined-text-field-hover-outline-color: #555555;
+  --mdc-outlined-text-field-focus-outline-color: #3b82f6; 
+  --mdc-theme-text-primary-on-background: #ffffff;
+}
+
+::ng-deep .custom-field input {
+    color: white !important;
+}

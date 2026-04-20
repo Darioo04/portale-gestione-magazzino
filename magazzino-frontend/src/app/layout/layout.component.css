@@ -1,0 +1,8 @@
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+::ng-deep .mat-mdc-list-item-icon {
+  color: inherit !important;
+}
+::ng-deep .mdc-list-item__primary-text {
+  color: inherit !important;
+}
