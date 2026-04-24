@@ -2,10 +2,21 @@
   --mdc-outlined-text-field-container-color: #2a2a2a;
   --mdc-outlined-text-field-outline-color: #333333;
   --mdc-outlined-text-field-hover-outline-color: #555555;
-  --mdc-outlined-text-field-focus-outline-color: #3b82f6; 
-  --mdc-theme-text-primary-on-background: #ffffff;
+  --mdc-outlined-text-field-focus-outline-color: #3b82f6;
+  --mdc-outlined-text-field-label-text-color: #9ca3af;
+  --mdc-outlined-text-field-hover-label-text-color: #d1d5db;
+  --mdc-outlined-text-field-focus-label-text-color: #3b82f6;
+  --mdc-outlined-text-field-input-text-color: #ffffff;
 }
 
 ::ng-deep .custom-field input {
-    color: white !important;
+  color: white !important;
+}
+
+/* Icona grande nel cerchio avatar */
+.avatar-icon {
+  font-size: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 40px !important;
 }

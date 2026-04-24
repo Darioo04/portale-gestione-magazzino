@@ -9,6 +9,10 @@ export class MovementService {
 
   constructor(private http: HttpClient) {}
 
+  getAll(): Observable<Movement[]> {
+    return this.http.get<Movement[]>(this.apiUrl);
+  }
+
   load(movement: Movement): Observable<Movement> {
     return this.http.post<Movement>(`${this.apiUrl}/load`, movement);
   }

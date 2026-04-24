@@ -40,10 +40,17 @@ export interface Product {
 
 export interface Movement {
   id?: number;
-  dataMovimento?: string;
+  movementDate?: string;
   quantity: number;
   productId: number;
   userId: number;
+  // Campi extra (read-only dal backend)
+  productName?: string;
+  productBrand?: string;
+  productEanCode?: string;
+  username?: string;
+  userFirstName?: string;
+  userLastName?: string;
 }
 
 export interface User {

@@ -1,62 +1,77 @@
 <div class="px-4 py-2">
   <h1 class="text-3xl font-light mb-6 text-white border-b border-gray-800 pb-4">Dashboard</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    
-    <mat-card class="bg-[#1e1e1e] border border-gray-800 shadow-md">
-      <mat-card-content class="flex items-center p-6">
-        <div class="rounded-full bg-blue-500/20 p-4 mr-4">
-          <mat-icon class="text-blue-500">inventory_2</mat-icon>
-        </div>
-        <div>
-          <p class="text-gray-400 text-sm uppercase tracking-wider font-semibold">Prodotti Censi</p>
-          <h2 class="text-3xl font-bold text-white mb-0">Visita</h2>
-        </div>
-      </mat-card-content>
-    </mat-card>
+  <!-- Schede rapide -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
 
-    <mat-card class="bg-[#1e1e1e] border border-gray-800 shadow-md">
-      <mat-card-content class="flex items-center p-6">
-        <div class="rounded-full bg-purple-500/20 p-4 mr-4">
-          <mat-icon class="text-purple-500">sync_alt</mat-icon>
-        </div>
-        <div>
-          <p class="text-gray-400 text-sm uppercase tracking-wider font-semibold">Movimenti Odierni</p>
-          <h2 class="text-3xl font-bold text-white mb-0">Controlla</h2>
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <a routerLink="/products" class="no-underline">
+      <mat-card class="border border-gray-800 shadow-md cursor-pointer hover:border-blue-500/50 transition-colors">
+        <mat-card-content class="flex items-center p-5">
+          <div class="rounded-full bg-blue-500/15 p-3 mr-4 flex-shrink-0">
+            <mat-icon class="text-blue-400" style="font-size:28px;width:28px;height:28px;line-height:28px">inventory_2</mat-icon>
+          </div>
+          <div>
+            <p class="text-gray-400 text-xs uppercase tracking-widest font-semibold m-0">Tipi Prodotto</p>
+            <h2 class="text-xl font-semibold text-white m-0 mt-1">Visualizza Catalogo →</h2>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </a>
+
+    <a routerLink="/movements" class="no-underline">
+      <mat-card class="border border-gray-800 shadow-md cursor-pointer hover:border-purple-500/50 transition-colors">
+        <mat-card-content class="flex items-center p-5">
+          <div class="rounded-full bg-purple-500/15 p-3 mr-4 flex-shrink-0">
+            <mat-icon class="text-purple-400" style="font-size:28px;width:28px;height:28px;line-height:28px">sync_alt</mat-icon>
+          </div>
+          <div>
+            <p class="text-gray-400 text-xs uppercase tracking-widest font-semibold m-0">Movimenti</p>
+            <h2 class="text-xl font-semibold text-white m-0 mt-1">Storico Movimenti →</h2>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </a>
 
   </div>
 
-  <h2 class="text-xl font-medium mb-4 text-red-400 flex items-center">
-    <mat-icon class="mr-2">warning</mat-icon> Prodotti Sotto Scorta
+  <!-- Sezione Sotto Scorta -->
+  <h2 class="text-lg font-medium mb-4 text-red-400 flex items-center gap-2">
+    <mat-icon>warning</mat-icon> Prodotti Sotto Scorta
   </h2>
-  
-  <mat-card class="bg-[#1e1e1e] border border-red-900/50 shadow-md">
+
+  <!-- Errore -->
+  <div *ngIf="underStockError" class="bg-red-500/10 border border-red-500/30 rounded-lg p-4 flex items-center gap-3 mb-4">
+    <mat-icon class="text-red-400 flex-shrink-0">error_outline</mat-icon>
+    <p class="text-red-400 text-sm m-0">Impossibile caricare i prodotti sotto scorta. Verifica la connessione al server.</p>
+  </div>
+
+  <mat-card class="border border-red-900/40 shadow-md" *ngIf="!underStockError">
     <mat-card-content class="p-0">
       <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+        <table class="w-full text-left border-collapse min-w-[500px]">
           <thead>
-            <tr class="bg-gray-800/50 border-b border-gray-800">
-              <th class="p-4 text-sm font-semibold text-gray-300">EAN</th>
-              <th class="p-4 text-sm font-semibold text-gray-300">Quantità</th>
-              <th class="p-4 text-sm font-semibold text-gray-300">Lotto</th>
-              <th class="p-4 text-sm font-semibold text-gray-300">Posizione</th>
+            <tr class="border-b border-gray-800">
+              <th class="p-4 text-sm font-semibold text-gray-400">EAN</th>
+              <th class="p-4 text-sm font-semibold text-gray-400">Quantità</th>
+              <th class="p-4 text-sm font-semibold text-gray-400">Lotto</th>
+              <th class="p-4 text-sm font-semibold text-gray-400">Posizione</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let p of underStockProducts$ | async" class="border-b border-gray-800 hover:bg-white/5 transition-colors">
-              <td class="p-4 font-mono text-gray-400">{{ p.eanCode }}</td>
-              <td class="p-4 font-bold text-red-500">{{ p.quantity }}</td>
+              <td class="p-4 font-mono text-gray-400 text-sm">{{ p.eanCode }}</td>
+              <td class="p-4">
+                <span class="font-bold text-red-400 bg-red-500/10 px-2 py-1 rounded text-sm">{{ p.quantity }}</span>
+              </td>
               <td class="p-4 text-gray-300">{{ p.batch }}</td>
-              <td class="p-4 text-gray-400">
-                {{ p.locationArea }} - C{{ p.locationAisle }}S{{ p.locationShelf }}
+              <td class="p-4 text-gray-400 text-sm">
+                {{ p.locationArea }} – C{{ p.locationAisle }} S{{ p.locationShelf }}
               </td>
             </tr>
             <tr *ngIf="(underStockProducts$ | async)?.length === 0">
-              <td colspan="4" class="p-8 text-center text-gray-500">
-                Nessun prodotto sotto la soglia di scorta.
+              <td colspan="4" class="p-10 text-center text-gray-500 text-sm">
+                <mat-icon class="text-green-500 align-middle mr-2">check_circle</mat-icon>
+                Tutti i prodotti sono sopra la soglia di scorta.
               </td>
             </tr>
           </tbody>

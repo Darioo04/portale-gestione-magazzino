@@ -1,1 +1,13 @@
 /* Dashboard styles */
+a.no-underline {
+  text-decoration: none;
+  display: block;
+}
+
+a.no-underline mat-card {
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+a.no-underline:hover mat-card {
+  transform: translateY(-2px);
+}

@@ -38,7 +38,20 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+    try {
+      const decoded = jwtDecode<any>(token);
+      // Verifica scadenza: exp è in secondi Unix
+      if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+        this.logout();
+        return false;
+      }
+      return true;
+    } catch {
+      this.logout();
+      return false;
+    }
   }
 
   private checkToken() {
@@ -46,6 +59,11 @@ export class AuthService {
     if (token) {
       try {
         const decoded = jwtDecode<any>(token);
+        // Rimuovi token scaduto al riavvio dell'app
+        if (decoded.exp && decoded.exp * 1000 < Date.now()) {
+          this.logout();
+          return;
+        }
         this.currenUserSubject.next(decoded);
       } catch(e) {
         this.logout();
