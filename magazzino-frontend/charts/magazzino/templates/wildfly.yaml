@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: magazzino-app
+  labels:
+    app: magazzino
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: magazzino
+  template:
+    metadata:
+      labels:
+        app: magazzino
+    spec:
+      containers:
+      - name: wildfly
+        # Usiamo l'immagine buildata dalla pipeline
+        image: {{ .Values.image | default "magazzino-wildfly:latest" }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 9990
+          name: admin
+        env:
+        # Configurazione per connettersi al database MySQL in cluster
+        - name: DB_URL
+          value: "jdbc:mysql://mysql-service:3306/magazzino_db"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASS
+          value: "root"
+        # Probes per verificare che l'app sia pronta e attiva
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: magazzino-service
+spec:
+  selector:
+    app: magazzino
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  # NodePort permette di accedere all'app da Windows tramite l'IP della WSL
+  type: NodePort
